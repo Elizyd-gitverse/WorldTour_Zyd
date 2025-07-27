@@ -33,12 +33,11 @@ function Form() {
 
 
   useEffect(function() {
-    const API_KEY = import.meta.env.VITE_BDC_API_KEY;
     async function fetchMapClickCity() {
        try{
          setIsLoading(true)
          setIsError("")
-         const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode?latitude=${lat}&longitude=${lng}&localityLanguage=en&key=${API_KEY}`)
+         const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`)
          if(!res.ok) throw new Error("Error IP address is blocked!! 🚫")
          const data = await res.json()
          if(!data.city) throw new Error('That doesnt seem to be like a city, Please click some where else')
