@@ -27,7 +27,7 @@ const FAKE_USER = {
   name: "Siddharth",
   email: "sid@example.com",
   password: "qwerty",
-  avatar: "https://i.pravatar.cc/100?u=zz",
+  avatar: "/iconzydd.webp",
 };
 
 //2.Provide Context
