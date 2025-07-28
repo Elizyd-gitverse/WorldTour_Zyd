@@ -22,7 +22,7 @@ function City() {
 
   useEffect(function() {
        fetchCityIdDetails(id)
-  }, [id])
+  }, [id, fetchCityIdDetails])
 
 
   if(isLoading) return <Spinner />

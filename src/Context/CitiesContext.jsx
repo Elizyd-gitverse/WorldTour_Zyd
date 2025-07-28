@@ -1,6 +1,6 @@
 // useReducer + Context API
 
-import { createContext, useContext, useEffect, useReducer } from "react";
+import { createContext, useCallback, useContext, useEffect, useReducer } from "react";
 
 
 //1 create Context api
@@ -67,7 +67,7 @@ function CitiesContextProvider({children}) {
     }, [])
 
     //2. GETTING DATA FROM API BY USING ID OF ALREADY FETCHED DATA FROM API
-    async function fetchCityIdDetails(id) {
+   const fetchCityIdDetails = useCallback(async function fetchCityIdDetails(id) {
         try{
             dispatch({type: 'Loading'})
             const res = await fetch(`${BASE_URL}/cities/${id}`)
@@ -79,7 +79,7 @@ function CitiesContextProvider({children}) {
          console.log(err.message)
          dispatch({type:'Error', payload: err.message})
         }
-    }
+    }, [])
 
     //3. SENDIG DATA TO API 
     async function SendCityData(newCity) {
