@@ -3,12 +3,13 @@ please use below fake credential for login
 - email: sid@gmail.com
 - password: 12344321
 
-
+## Frontend - https://worldtour-zyd.netlify.app/
+## Backend - https://world-tour-city-api.onrender.com 
 For creation of this site used React features like Context API,Custom Hook,React Router, useReducer, useState, useMemo, useCallBack, memo
 
 # Cities REST API
 
-https://world-tour-city-api.onrender.com  
+ 
 use fake credentials/data, avoid sharing any real secrets and fields required are :
 - "name": "yourname",
 - "email": "random@gmail.com", 
