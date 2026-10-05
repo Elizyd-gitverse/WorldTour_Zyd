@@ -1,7 +1,7 @@
 Integrated Frontend with backend api using node express mongoDb with JWT COOKIE Authentication
 please use below fake credential for login
-email: sid@gmail.com
-password: 12344321
+- email: sid@gmail.com
+- password: 12344321
 
 
 For creation of this site used React features like Context API,Custom Hook,React Router, useReducer, useState, useMemo, useCallBack, memo
