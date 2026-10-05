@@ -1,6 +1,6 @@
 // useReducer + Context API
 
-import { createContext, useCallback, useContext, useEffect, useReducer } from "react";
+import { createContext, useCallback, useContext, useReducer } from "react";
 
 
 //1 create Context api
