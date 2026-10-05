@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom";
 import styles from "./City.module.css";
 import { useEffect } from "react";
-import { CitiesContextUse } from "../Context/CitiesContext";
-import Spinner from "./Spinner"
-import BackButton from "./BackButton";
-import Message from "./Message";
+import { CitiesContextUse } from "../../Context/CitiesContext";
+
+import BackButton from "../../ui/Button/BackButton";
+import Message from "../../ui/Error/Message";
+import Spinner from "../../ui/Spinner/Spinner";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {

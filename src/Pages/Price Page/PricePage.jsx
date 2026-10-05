@@ -1,5 +1,5 @@
-import PageNav from "../Component/PageNav"
-import style from "./Product.module.css"
+import PageNav from "../../ui/Page Nav/PageNav"
+import style from "../Product Page/Product.module.css"
 
 export default function PricePage() {
      return (

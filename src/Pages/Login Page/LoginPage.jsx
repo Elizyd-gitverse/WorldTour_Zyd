@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import PageNav from "../Component/PageNav";
+import PageNav from "../../ui/Page Nav/PageNav";
 import styles from "./Login.module.css"
-import Button from "../Component/Button"
-import { AuthContextUse } from "../Context/FakeAuthContext";
+import Button from "../../ui/Button/Button"
+import { AuthContextUse } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("sid@example.com");
-  const [password, setPassword] = useState("qwerty");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate()
 
   const {login, isAuth} = AuthContextUse()

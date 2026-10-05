@@ -1,4 +1,4 @@
-import PageNav from "../Component/PageNav";
+import PageNav from "../../ui/Page Nav/PageNav";
 import style from "./Product.module.css"
 
 

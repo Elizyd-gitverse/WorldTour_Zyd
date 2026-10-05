@@ -1,10 +1,7 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 
 //1. Create Context
 const AuthContext = createContext()
-
-
-
 
 //USEREDUCER
 
@@ -22,25 +19,36 @@ function reducer(state, action) {
         default: throw new Error('Action Unknown')
     }
 }
-//user info
-const FAKE_USER = {
-  name: "Siddharth",
-  email: "sid@example.com",
-  password: "qwerty",
-  avatar: "/iconzydd.webp",
-};
 
 //2.Provide Context
+const BASE_URL = import.meta.env.VITE_API_URL
 function AuthContextProvider({children}) {
     const [state, dispatch] = useReducer(reducer, initialState)
     const {user, isAuth} = state
 
-    function login(email, password) {
-        if(email === FAKE_USER.email && password === FAKE_USER.password)
-            dispatch({type: "Login", payload: FAKE_USER})
-        else alert("Wrong email and password :( Try again")
+    //login from Backend Added
+    async function login(email, password) {
+        try{
+            const res = await fetch(`${BASE_URL}/users/login`, {
+                method: 'POST',
+                body: JSON.stringify({email, password}),
+                credentials: "include", //mention in auth
+                headers: {
+                    'Content-Type': "application/json"
+                }
+            })
+
+            const data = await res.json()
+
+            if(data.status === 'fail') throw new Error(data.message)
+
+            dispatch({type: "Login", payload: {...data.data.user, avatar: "/iconzydd.webp"}})
+        }catch(err) {
+             alert(err.message)
+        }
     }
 
+    //logout
     function logout() {
        dispatch({type: "Logout"})
     }

@@ -32,7 +32,7 @@ function reducer(state, action) {
 
         case "CityDataSent": return {...state, citiesArr: [...state.citiesArr, action.payload]}
 
-        case "DeleteCity": return {...state, citiesArr: state.citiesArr.filter(city => city.id !== action.payload)}
+        case "DeleteCity": return {...state, citiesArr: state.citiesArr.filter(city => city._id !== action.payload)}
 
         case "Error": return {...state, isLoading: false, isError: action.payload}
 
@@ -41,42 +41,46 @@ function reducer(state, action) {
 }
 
 // const BASE_URL = 'http://localhost:8000'
-const BASE_URL = 'https://citiesjson.onrender.com'
-
+// const BASE_URL = 'https://citiesjson.onrender.com'
+//2. take here
+const BASE_URL = import.meta.env.VITE_API_URL
 //2 Create Provider
 function CitiesContextProvider({children}) {
     const [state, dispatch] = useReducer(reducer, initialState)
     const { isLoading, isError, citiesArr, currentCity, mapPosition } = state
 
     //1. GETTING DATA FROM API 
-    useEffect(function() {
        async function fetchCities() {
           try{
             dispatch({type: "Loading"})
-            const res = await fetch(`${BASE_URL}/cities`)
-            if(!res.ok) throw new Error("City Data Not Fetched 🚫")
-            const data = await res.json()
-            dispatch({type: "CityDataFetched", payload: data})
+            const res = await fetch(`${BASE_URL}/cities`, {
+                credentials: "include", //mention in every fetch
+            })
 
+            const data = await res.json()
+            if(data.status === 'fail') throw new Error(data.message)
+
+            dispatch({type: "CityDataFetched", payload: data.data.cities})
           }catch(err) {
-            console.log(err.message)
             dispatch({type:'Error', payload: err.message})
           }
        }
-       fetchCities()
-    }, [])
+
 
     //2. GETTING DATA FROM API BY USING ID OF ALREADY FETCHED DATA FROM API
    const fetchCityIdDetails = useCallback(async function fetchCityIdDetails(id) {
         try{
             dispatch({type: 'Loading'})
-            const res = await fetch(`${BASE_URL}/cities/${id}`)
-            if(!res.ok) throw new Error("Current City Data Not Fetched 🚫")
+            const res = await fetch(`${BASE_URL}/cities/${id}`, {
+                credentials: "include"
+            })
+
             const data = await res.json()
-            dispatch({type: 'CurrentCityDataFetched', payload: data})
+            if(data.status === 'fail') throw new Error(data.message)
+
+            dispatch({type: 'CurrentCityDataFetched', payload: data.data.city})
 
         }catch(err) {
-         console.log(err.message)
          dispatch({type:'Error', payload: err.message})
         }
     }, [])
@@ -87,28 +91,33 @@ function CitiesContextProvider({children}) {
          const res = await fetch(`${BASE_URL}/cities`, {
             method: "POST",
             body: JSON.stringify(newCity),
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             }
          })
-          if(!res.ok) throw new Error("Current City Data Could not be Marked 🚫")
          const data = await res.json()
-         dispatch({type: "CityDataSent", payload: data})
+         if(data.status === 'fail') throw new Error(data.message)
+         dispatch({type: "CityDataSent", payload: data.data.city})
 
         }catch(err) {
-            console.log(err.message)
             dispatch({type:'Error', payload: err.message})
         }
     }
 
     //4. DELETING CITY FROM API by ID
     async function DeleteCity(id) {
-        console.log(id)
-         await fetch(`${BASE_URL}/cities/${id}`, {
-            method: 'DELETE'
+        const res = await fetch(`${BASE_URL}/cities/${id}`, {
+            method: 'DELETE',
+            credentials: "include"
           })
 
-         dispatch({type: "DeleteCity", payload: id})
+        if(!res.ok) {
+           const data = await res.json()
+           throw new Error(data.message)
+        }  
+        
+          dispatch({type: "DeleteCity", payload: id})
     }
 
 
@@ -118,11 +127,12 @@ function CitiesContextProvider({children}) {
         isError,
         citiesArr,
         currentCity,
+
+        fetchCities,
         fetchCityIdDetails,
         mapPosition, 
         SendCityData,
         DeleteCity,
-
         dispatch
        }}>{children}</CitiesContext.Provider>
 }

@@ -1,4 +1,4 @@
-import style from "./Sidebar.module.css"
+import style from "../Component/Side Bar/Sidebar.module.css"
 
 export default function Footer() {
     return ( 

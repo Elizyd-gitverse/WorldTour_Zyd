@@ -13,5 +13,3 @@ export default function AppNav() {
     </div>
   )
 }
-
-console.log("new Folder");

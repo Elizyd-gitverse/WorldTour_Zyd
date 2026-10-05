@@ -2,11 +2,11 @@
 import { useNavigate } from "react-router-dom"
 import style from "./Map.module.css"
 import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from "react-leaflet"
-import { CitiesContextUse } from "../Context/CitiesContext"
+import { CitiesContextUse } from "../../Context/CitiesContext"
 import { useEffect } from "react"
-import useUrlLocation from "../hooks/useUrlLocation"
-import useGeoLocation from "../hooks/useGeoLocation"
-import Button from "./Button"
+import useUrlLocation from "../../hooks/useUrlLocation"
+import useGeoLocation from "../../hooks/useGeoLocation"
+import Button from "../../ui/Button/Button"
 
 
 export default function Map() {
@@ -35,7 +35,7 @@ useEffect(function() {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
            />
            {citiesArr.map(city => (
-              <Marker position={[city.position.lat, city.position.lng]} key={city.id}>
+              <Marker position={[city.position.lat, city.position.lng]} key={city._id}>
                 <Popup>
                   {city.emoji} {city.cityName}
                 </Popup>

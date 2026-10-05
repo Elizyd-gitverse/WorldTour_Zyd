@@ -1,4 +1,4 @@
-import { CitiesContextUse } from "../Context/CitiesContext"
+import { CitiesContextUse } from "../../Context/CitiesContext"
 
 import style from "./CountryList.module.css"
 import CountryItem from "./CountryItem"
@@ -8,7 +8,7 @@ export default function CountryList() {
 
     const countryArr = citiesArr.reduce((acumArr ,city) => {
        if(acumArr.some(acum => acum.country === city.country)) return acumArr
-       else return [...acumArr, { country: city.country, emoji: city.emoji, id: city.id } ]
+       else return [...acumArr, { country: city.country, emoji: city.emoji, id: city._id } ]
     }, [])
 
     return (

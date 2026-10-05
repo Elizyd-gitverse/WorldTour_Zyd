@@ -3,15 +3,15 @@
 import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { CitiesContextUse } from "../Context/CitiesContext";
+import { CitiesContextUse } from "../../Context/CitiesContext";
 import styles from "./Form.module.css";
-import Button from "./Button";
-import BackButton from "./BackButton";
-import useUrlLocation from "../hooks/useUrlLocation";
-import Spinner from "./Spinner";
-import Message from "./Message"
+import Message from "../../ui/Error/Message"
 import DatePicker from "react-datepicker";
 import { useNavigate } from "react-router-dom";
+import Button from "../../ui/Button/Button";
+import useUrlLocation from "../../hooks/useUrlLocation";
+import BackButton from "../../ui/Button/BackButton";
+import Spinner from "../../ui/Spinner/Spinner";
 
 
 function Form() {
@@ -41,7 +41,6 @@ function Form() {
          if(!res.ok) throw new Error("Error IP address is blocked!! 🚫")
          const data = await res.json()
          if(!data.city) throw new Error('That doesnt seem to be like a city, Please click some where else')
-          console.log(data)
          setCityName(data.city || data.locality || "")
          setCountry(data.countryName)
          setEmoji(data.countryCode)
