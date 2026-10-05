@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 
 //1. Create Context
 const AuthContext = createContext()
@@ -29,7 +29,7 @@ function AuthContextProvider({children}) {
     //login from Backend Added
     async function login(email, password) {
         try{
-            const res = await fetch(`${BASE_URL}/users/login`, {
+            const res = await fetch(`${BASE_URL}/api/v1/users/login`, {
                 method: 'POST',
                 body: JSON.stringify({email, password}),
                 credentials: "include", //mention in auth

@@ -53,7 +53,7 @@ function CitiesContextProvider({children}) {
        async function fetchCities() {
           try{
             dispatch({type: "Loading"})
-            const res = await fetch(`${BASE_URL}/cities`, {
+            const res = await fetch(`${BASE_URL}/api/v1/cities`, {
                 credentials: "include", //mention in every fetch
             })
 
@@ -71,7 +71,7 @@ function CitiesContextProvider({children}) {
    const fetchCityIdDetails = useCallback(async function fetchCityIdDetails(id) {
         try{
             dispatch({type: 'Loading'})
-            const res = await fetch(`${BASE_URL}/cities/${id}`, {
+            const res = await fetch(`${BASE_URL}/api/v1/cities/${id}`, {
                 credentials: "include"
             })
 
@@ -88,7 +88,7 @@ function CitiesContextProvider({children}) {
     //3. SENDIG DATA TO API 
     async function SendCityData(newCity) {
         try{
-         const res = await fetch(`${BASE_URL}/cities`, {
+         const res = await fetch(`${BASE_URL}/api/v1/cities`, {
             method: "POST",
             body: JSON.stringify(newCity),
             credentials: "include",
@@ -107,7 +107,7 @@ function CitiesContextProvider({children}) {
 
     //4. DELETING CITY FROM API by ID
     async function DeleteCity(id) {
-        const res = await fetch(`${BASE_URL}/cities/${id}`, {
+        const res = await fetch(`${BASE_URL}/api/v1/cities/${id}`, {
             method: 'DELETE',
             credentials: "include"
           })
