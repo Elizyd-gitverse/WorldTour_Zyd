@@ -1,3 +1,4 @@
+Implemented React Query features like useQuery useMutation
 Integrated Frontend with backend api using node express mongoDb with JWT COOKIE Authentication
 please use below fake credential for login
 - email: sid@gmail.com
