@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import style from "./CityItem.module.css"
 import { CitiesContextUse } from "../../Context/CitiesContext"
+import useDeleteCityQuery from "./useCityDeleteQuery"
 
 
 //Formating date
@@ -14,7 +15,8 @@ function formatDate(date) {
 }
 
 export default function CityItem({cityObj}) {
-   const {currentCity, DeleteCity} = CitiesContextUse()
+   const {currentCity} = CitiesContextUse()
+   const {DeleteCity, isPending} = useDeleteCityQuery()
 
    function handleDeleteCity(e) {
      e.preventDefault()
@@ -27,7 +29,7 @@ export default function CityItem({cityObj}) {
         <span className={style.emoji}>{cityObj.emoji}</span>
         <h3 className={style.name}>{cityObj.cityName}</h3>
         <time className={style.date}>{formatDate(cityObj.date)}</time>
-        <button className={style.deleteBtn} onClick={handleDeleteCity}>&times;</button>
+        <button className={style.deleteBtn} onClick={handleDeleteCity} disabled={isPending}>&times;</button>
        </Link>
      </li>
   )

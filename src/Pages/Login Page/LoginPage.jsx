@@ -4,18 +4,20 @@ import styles from "./Login.module.css"
 import Button from "../../ui/Button/Button"
 import { AuthContextUse } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import useLoginApi from "../../Component/User/useUserApi";
+
 
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate()
-
-  const {login, isAuth} = AuthContextUse()
-
+  const {isAuth} = AuthContextUse()
+  const {login} = useLoginApi(email, password)
+ 
   function handleLogin(e) {
     e.preventDefault()
-   if(email && password) login(email, password)
+   if(email && password) login(email, password) //mutate = login
   }
 
   useEffect(function() {

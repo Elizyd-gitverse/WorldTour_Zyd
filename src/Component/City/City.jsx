@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 import styles from "./City.module.css";
-import { useEffect } from "react";
-import { CitiesContextUse } from "../../Context/CitiesContext";
 
 import BackButton from "../../ui/Button/BackButton";
 import Message from "../../ui/Error/Message";
 import Spinner from "../../ui/Spinner/Spinner";
+import useCityDetailsQuery from "./useCityDetailsQuery";
+import { useEffect } from "react";
+import { CitiesContextUse } from "../../Context/CitiesContext";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -16,19 +17,18 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 function City() {
+  const {dispatch} = CitiesContextUse()
   const { id } = useParams() //URL ID 
-  const {fetchCityIdDetails, isLoading, isError, currentCity} = CitiesContextUse()
-  const { cityName, emoji, date, notes } = currentCity;
+  const {currentCity, isFetching, error} = useCityDetailsQuery(id)
 
 
   useEffect(function() {
-       fetchCityIdDetails(id)
-  }, [id, fetchCityIdDetails])
-
-
-  if(isLoading) return <Spinner />
-
-  if(isError) return <Message message={isError}/>
+    if(currentCity) dispatch({type: "currentCity", payload: currentCity})
+  }, [dispatch, currentCity])
+  
+  if(isFetching) return <Spinner />
+  if(error) return <Message message={error.message}/>
+  const { cityName, emoji, date, notes } = currentCity;
 
   return (
     <div className={styles.city}>

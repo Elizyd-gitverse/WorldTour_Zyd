@@ -1,23 +1,17 @@
-import { CitiesContextUse } from "../../Context/CitiesContext"
+
 import Message from "../../ui/Error/Message"
 import Spinner from "../../ui/Spinner/Spinner"
 import CityItem from "./CityItem"
 
 import style from "./CityList.module.css"
+import useCityFetchQuery from "./useCityFetchQuery"
 
-import { useEffect } from "react"
 
 export default function CityList() {
-   const { citiesArr,  isLoading, isError, fetchCities } = CitiesContextUse()
+    const {citiesArr, isFetching, error} = useCityFetchQuery()
 
-   useEffect(function() {
-      fetchCities()
-   }, [])
-
-    //the code order matters
-    if(isLoading) return <Spinner />
-
-    if(isError) return <Message message={isError}/>
+    if(isFetching) return <Spinner />
+    if(error) return <Message message={error.message}/>
 
     if(!citiesArr.length) return <Message message={'Start adding cities by clicking on Map 😉'}/>
 

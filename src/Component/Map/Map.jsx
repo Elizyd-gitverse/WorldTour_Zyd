@@ -7,12 +7,15 @@ import { useEffect } from "react"
 import useUrlLocation from "../../hooks/useUrlLocation"
 import useGeoLocation from "../../hooks/useGeoLocation"
 import Button from "../../ui/Button/Button"
+import useCityFetchQuery from "../City/useCityFetchQuery"
 
 
 export default function Map() {
-  const { citiesArr, mapPosition, dispatch } = CitiesContextUse()
+  const { mapPosition, dispatch } = CitiesContextUse()
   const [mapLat, mapLng] = useUrlLocation()
   const { getPosition, geoPos } = useGeoLocation()
+
+  const {citiesArr} = useCityFetchQuery()
 
 //From USEPARAM 
   useEffect(function() {
@@ -25,7 +28,6 @@ useEffect(function() {
    if(geoPos) dispatch({type: "GeoPosition", payload: [geoPos.lat, geoPos.lng]})
 }, [geoPos, dispatch])
 
- 
     return (
         <div className={style.mapContainer}>
           <Button type="position" onClick={getPosition}>Use Your Location</Button>

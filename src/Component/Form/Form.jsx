@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { CitiesContextUse } from "../../Context/CitiesContext";
 import styles from "./Form.module.css";
 import Message from "../../ui/Error/Message"
 import DatePicker from "react-datepicker";
@@ -12,13 +11,10 @@ import Button from "../../ui/Button/Button";
 import useUrlLocation from "../../hooks/useUrlLocation";
 import BackButton from "../../ui/Button/BackButton";
 import Spinner from "../../ui/Spinner/Spinner";
+import useCityAddQuery from "../City/useCityAddQuery";
 
 
 function Form() {
-  //can take lat & lng from useSearcParam or from CitiesContext API
-  // const {mapPosition} = CitiesContextUse()
-  // const [lat, lng] = mapPosition
-  const {SendCityData} = CitiesContextUse()
   const [lat, lng] = useUrlLocation() 
   const navigate = useNavigate()
 
@@ -30,7 +26,7 @@ function Form() {
   const [notes, setNotes] = useState("");
   const [emoji, setEmoji] = useState('')
 
-
+  const {CreateCity} = useCityAddQuery()
 
   useEffect(function() {
     async function fetchMapClickCity() {
@@ -57,9 +53,8 @@ function Form() {
 
  async function handleSubmit(e) {
   e.preventDefault()
-  if(!cityName && !date) return;
   const newCity = {cityName, country, date, notes, position: {lat: Number(lat), lng: Number(lng)}, emoji: '🍃'}
-   await SendCityData(newCity)
+   CreateCity(newCity)
    navigate('/map/city')
  }
 

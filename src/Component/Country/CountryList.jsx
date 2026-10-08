@@ -1,10 +1,9 @@
-import { CitiesContextUse } from "../../Context/CitiesContext"
-
 import style from "./CountryList.module.css"
 import CountryItem from "./CountryItem"
+import useCityFetchQuery from "../City/useCityFetchQuery"
 
 export default function CountryList() {
-    const { citiesArr } = CitiesContextUse()
+    const { citiesArr } = useCityFetchQuery()
 
     const countryArr = citiesArr.reduce((acumArr ,city) => {
        if(acumArr.some(acum => acum.country === city.country)) return acumArr
